@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CEGO Table Tennis Ladder</title>
+    <script src="/client/jquery.js"></script>
+    <script src="/client/ladder.js"></script>
+    <link href="/client/style.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+
+{% block content %}
+    {% for user in users %}
+
+    <div>
+        {% if user.challengeId >= 0 %}<hr>{% endif %}
+        <div>
+            {{user.ladderPosition}} {{ user.email }}
+            {% if user.challengable %}<button data-user-id="{{ user.userId }}" data-email="{{ user.email }}" class="challenge_button">Challenge</button>{% endif %}
+        </div>
+
+        {% if user.challengeId >= 0 %}
+        <div>
+            <div>
+                <table>
+                    <tr>
+                        <th>#</th>
+                        <th>{{user.email}}</th>
+                        <th>{{user.opponentEmail}}</th>
+                    </tr>
+                    <tr class="set_row">
+                        <td>1</td>
+                        <td><input type="number" size="8" class="set_score_challenger" data-user-id="{{user.userId}}"/></td>
+                        <td><input type="number" size="8" class="set_score_opponent" data-user-id="{{user.opponentUserId}}"/></td>
+                    </tr>
+                    <tr class="set_row">
+                        <td>2</td>
+                        <td><input type="number" size="8" class="set_score_challenger" data-user-id="{{user.userId}}"/></td>
+                        <td><input type="number" size="8" class="set_score_opponent" data-user-id="{{user.opponentUserId}}"/></td>
+                    </tr>
+                    <tr class="set_row">
+                        <td>3</td>
+                        <td><input type="number" size="8" class="set_score_challenger" data-user-id="{{user.userId}}"/></td>
+                        <td><input type="number" size="8" class="set_score_opponent" data-user-id="{{user.opponentUserId}}"/></td>
+                    </tr>
+                    <tr class="set_row">
+                        <td>4</td>
+                        <td><input type="number" size="8" class="set_score_challenger" data-user-id="{{user.userId}}"/></td>
+                        <td><input type="number" size="8" class="set_score_opponent" data-user-id="{{user.opponentUserId}}"/></td>
+                    </tr>
+                    <tr class="set_row">
+                        <td>5</td>
+                        <td><input type="number" size="8" class="set_score_challenger" data-user-id="{{user.userId}}"/></td>
+                        <td><input type="number" size="8" class="set_score_opponent" data-user-id="{{user.opponentUserId}}"/></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div>
+                <button data-challenge-id="{{ user.challengeId }}" data-challenger-id="{{user.userId}}" data-opponent-id="{{user.opponentUserId}}" class="insert_result">Update Result</button>
+            </div>
+        </div>
+        {% endif %}
+        {% if user.challengeId >= 0 %}<hr>{% endif %}
+
+    </div>
+
+    {% endfor %}
+{% endblock %}
+
+</body>
+</html>
