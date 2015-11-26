@@ -3,3 +3,6 @@ https://trello.com/b/dQrV1JPI/table-tennis-ladder
 
 --- Commands ---
 node server/laddersystem.js MYSQLPASSWORD
+
+------
+Default port is 4404
