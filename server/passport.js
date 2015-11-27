@@ -33,7 +33,7 @@ Passport.prototype.listen = function() {
     this.passport.use(new GoogleStrategy({
             clientID: GOOGLE_CLIENT_ID,
             clientSecret: GOOGLE_CLIENT_SECRET,
-            callbackURL: "/auth/google/callback"
+            callbackURL: "http://ttladder.firecow.dk/auth/google/callback"
         },
         function(accessToken, refreshToken, profile, done) {
             // asynchronous verification, for effect...
