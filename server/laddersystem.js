@@ -170,10 +170,10 @@ LadderSystem.prototype.listenSendResult = function() {
             if (matchSet.opponent_score < 11 && matchSet.challenger_score < 11) {
                 throw 'No scores were over 11. ' + matchSet.opponent_score + ':' + matchSet.challenger_score;
             }
-            if (matchSet.challenger_score > matchSet.opponent_score && matchSet.challenger_score <= matchSet.opponent_score + 2) {
+            if (matchSet.challenger_score > matchSet.opponent_score && matchSet.challenger_score < matchSet.opponent_score + 2) {
                 throw 'Challenger must win with 2. ' + matchSet.challenger_score + ':' + matchSet.opponent_score;
             }
-            if (matchSet.opponent_score > matchSet.challenger_score && matchSet.opponent_score <= matchSet.challenger_score + 2) {
+            if (matchSet.opponent_score > matchSet.challenger_score && matchSet.opponent_score < matchSet.challenger_score + 2) {
                 throw 'Opponent must win with 2. ' + matchSet.opponent_score + ':' + matchSet.challenger_score;
             }
             if (matchSet.challenger_score === matchSet.opponent_score) {
