@@ -161,8 +161,8 @@ LadderSystem.prototype.listenSendResult = function() {
 
         // Change positions if needed.
         waterFallList.push(function(challenger, opponent, callback) {
-            console.log('Change Positions', challenger.getUserId(), opponent.getUserId());
             if (challengerSets > opponentSets) {
+                console.log('Change Positions', challenger.getUserId(), opponent.getUserId());
                 var parallelList = [];
                 // Update challengers position.
                 parallelList.push(function(callback) {
