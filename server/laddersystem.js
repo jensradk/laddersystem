@@ -1,5 +1,6 @@
 var Passport = require('./passport'),
     SQL = require('./sql'),
+    repl = require('repl'),
     appDir = process.cwd(),
     fs = require('fs'),
     express = require('express'),
@@ -269,7 +270,7 @@ LadderSystem.prototype.listenSendResult = function() {
         });
 
         // When waterfall is done, return success as response.
-        async.waterfall(waterFallList, function(err, result) {
+        async.waterfall(waterFallList, function(err) {
             throwError(err);
             res.send({'success': true});
         });
@@ -329,5 +330,6 @@ LadderSystem.prototype.convertMatchSetsToMatchScores = function() {
 
 var ladderSystem = new LadderSystem();
 ladderSystem.listen(ladderSystem.config.port);
-//ladderSystem.convertMatchSetsToMatchScores();
+
+repl.start('> ').context.convertMatchSetsToMatchScores = ladderSystem.convertMatchSetsToMatchScores.bind(ladderSystem);
 
