@@ -172,6 +172,17 @@ LadderSystem.prototype.listenSendResult = function() {
                 parallelList.push(function(callback) {
                     sql.updateUserLadderPosition(opponent.getUserId(), challenger.getLadderPosition(), opponent.getLadderPosition(), callback);
                 });
+
+                // Add position change
+                parallelList.push(function(callback) {
+                    sql.insertPositionChange(opponent.getUserId(), opponent.getLadderPosition(), challenger.getLadderPosition(), callback);
+                });
+
+                // Add position change
+                parallelList.push(function(callback) {
+                    sql.insertPositionChange(challenger.getUserId(), challenger.getLadderPosition(), opponent.getLadderPosition(), callback);
+                });
+
                 async.parallel(parallelList, function(err) {
                     throwError(err);
                     callback(null);

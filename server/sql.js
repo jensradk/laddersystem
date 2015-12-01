@@ -171,6 +171,27 @@ SQL.prototype.updateUserLadderPosition = function(userId, newLadderPosition, old
 };
 
 /**
+ * @param {number} userId
+ * @param {number} fromLadderPosition
+ * @param {number} toLadderPosition
+ * @param {function(?Error)} callback
+ */
+SQL.prototype.insertPositionChange = function(userId, fromLadderPosition, toLadderPosition, callback) {
+    var connection = this.getConnection();
+    connection.connect();
+    connection.query('INSERT INTO position_changes (user_id, from_ladder_position, to_ladder_position, time) VALUES (?, ?, ?, ?)', [userId, fromLadderPosition, toLadderPosition, Date.now()], function(err, resultSet) {
+        if (err) {
+            throw err;
+        }
+        if (resultSet.affectedRows === 0) {
+            throw 'No rows where inserted';
+        }
+        callback(null);
+    });
+    connection.end();
+};
+
+/**
  * @param {number} challengerId
  * @param {number} opponentId
  * @param {function(?Error, number)} callback Error and insertId
