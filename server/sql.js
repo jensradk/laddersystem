@@ -152,10 +152,9 @@ SQL.prototype.removeChallenge = function(challengeId, callback) {
 /**
  * @param {number} userId
  * @param {number} newLadderPosition
- * @param {number} oldLadderPosition
  * @param {function(?Error)} callback
  */
-SQL.prototype.updateUserLadderPosition = function(userId, newLadderPosition, oldLadderPosition, callback) {
+SQL.prototype.updateUserLadderPosition = function(userId, newLadderPosition, callback) {
     var connection = this.getConnection();
     connection.connect();
     connection.query('UPDATE users SET ladder_position = ? WHERE user_id = ?', [newLadderPosition, userId], function(err, resultSet) {

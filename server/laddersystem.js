@@ -166,11 +166,11 @@ LadderSystem.prototype.listenSendResult = function() {
                 var parallelList = [];
                 // Update challengers position.
                 parallelList.push(function(callback) {
-                    sql.updateUserLadderPosition(challenger.getUserId(), opponent.getLadderPosition(), challenger.getLadderPosition(), callback);
+                    sql.updateUserLadderPosition(challenger.getUserId(), opponent.getLadderPosition(), callback);
                 });
                 // Update opponents position.
                 parallelList.push(function(callback) {
-                    sql.updateUserLadderPosition(opponent.getUserId(), challenger.getLadderPosition(), opponent.getLadderPosition(), callback);
+                    sql.updateUserLadderPosition(opponent.getUserId(), challenger.getLadderPosition(), callback);
                 });
 
                 // Add position change
