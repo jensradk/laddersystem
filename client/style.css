@@ -120,15 +120,15 @@ hr {
     line-height: 54px;
 }
 
-.block:nth-child(1) .user .position {
+.block:nth-child(2) .user .position {
     background: linear-gradient(to bottom, #8f711e 0%, #bca324 50%, #aa9124 50%, #877020 100%);
 }
 
-.block:nth-child(2) .user .position {
+.block:nth-child(3) .user .position {
     background: linear-gradient(to bottom, #787d7e 0%, #bbbdc1 50%, #9d9fa5 50%, #636265 100%);
 }
 
-.block:nth-child(3) .user .position {
+.block:nth-child(4) .user .position {
     background: linear-gradient(to bottom, #8f542b 0%, #a56d40 50%, #9e602d 50%, #81472a 100%);
 }
 
