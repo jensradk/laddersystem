@@ -5,20 +5,20 @@ var mysql = require('mysql'),
 
 /**
  * @constructor
- * @param {string} password
+ * @param {LadderSystem} ladderSystem
  */
-var SQL = function(password) {
+var SQL = function(ladderSystem) {
     /** @type {string} */
-    this.host = '127.0.0.1';
+    this.host = ladderSystem.config.sqlhost;
 
     /** @type {string} */
-    this.user = 'root';
+    this.user = ladderSystem.config.sqluser;
 
     /** @type {string} */
-    this.password = password;
+    this.password = ladderSystem.sqlPassword;
 
     /** @type {string} */
-    this.database = 'ttladder';
+    this.database = ladderSystem.config.sqldatabase;
 };
 
 /**
@@ -26,10 +26,10 @@ var SQL = function(password) {
  */
 SQL.prototype.getConnection = function() {
     return mysql.createConnection({
-        host     : this.host,
-        user     : this.user,
-        password : this.password,
-        database : this.database
+        host: this.host,
+        user: this.user,
+        password: this.password,
+        database: this.database
     });
 };
 
@@ -118,7 +118,7 @@ SQL.prototype.getChallenges = function(callback) {
 SQL.prototype.insertChallenge = function(challengerId, opponentId, callback) {
     var connection = this.getConnection();
     connection.connect();
-    connection.query('INSERT INTO challenges(challenger_id, opponent_id, time) VALUES (?, ?, ?)', [challengerId, opponentId, Date.now()], function(err, resultSet) {
+    connection.query('INSERT INTO challenges (challenger_id, opponent_id, time) VALUES (?, ?, ?)', [challengerId, opponentId, Date.now()], function(err, resultSet) {
         if (err) {
             throw err;
         }
@@ -142,7 +142,7 @@ SQL.prototype.removeChallenge = function(challengeId, callback) {
             throw err;
         }
         if (resultSet.affectedRows === 0) {
-            throw 'No challenges deleted. ' + challengeId ;
+            throw 'No challenges deleted. ' + challengeId;
         }
         callback(null);
     });
@@ -158,13 +158,13 @@ SQL.prototype.updateUserLadderPosition = function(userId, newLadderPosition, cal
     var connection = this.getConnection();
     connection.connect();
     connection.query('UPDATE users SET ladder_position = ? WHERE user_id = ?', [newLadderPosition, userId], function(err, resultSet) {
-            if (err) {
-                throw err;
-            }
-            if (resultSet.affectedRows === 0) {
-                throw 'No user positions where updated.';
-            }
-            callback(null);
+        if (err) {
+            throw err;
+        }
+        if (resultSet.affectedRows === 0) {
+            throw 'No user positions where updated.';
+        }
+        callback(null);
     });
     connection.end();
 };
@@ -213,16 +213,14 @@ SQL.prototype.insertMatch = function(challengerId, opponentId, callback) {
 /**
  * @param {number} matchSetIndex
  * @param {number} matchId
- * @param {number} challengerId
- * @param {number} opponentId
- * @param {number} challengerScore
- * @param {number} opponentScore
+ * @param {number} userId
+ * @param {number} score
  * @param {function(?Error)} callback
  */
-SQL.prototype.insertMatchSet = function(matchSetIndex, matchId, challengerId, opponentId, challengerScore, opponentScore, callback) {
+SQL.prototype.insertMatchScore = function(matchSetIndex, matchId, userId, score, callback) {
     var connection = this.getConnection();
     connection.connect();
-    connection.query('INSERT INTO `match_sets` (`match_set_index`, `match_id`, `challenger_id`, `opponent_id`, `challenger_score`, `opponent_score`) VALUES (?,?,?,?,?,?)', [matchSetIndex, matchId, challengerId, opponentId, challengerScore, opponentScore], function(err, resultSet) {
+    connection.query('INSERT INTO match_scores (match_id, match_set_index, user_id, score) VALUES (?,?,?,?)', [matchId, matchSetIndex, userId, score], function(err, resultSet) {
         if (err) {
             throw err;
         }
