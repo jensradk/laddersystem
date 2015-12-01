@@ -118,7 +118,7 @@ SQL.prototype.getChallenges = function(callback) {
 SQL.prototype.insertChallenge = function(challengerId, opponentId, callback) {
     var connection = this.getConnection();
     connection.connect();
-    connection.query('INSERT INTO challenges(challenger_id, opponent_id) VALUES (?, ?)', [challengerId, opponentId], function(err, resultSet) {
+    connection.query('INSERT INTO challenges(challenger_id, opponent_id, time) VALUES (?, ?, ?)', [challengerId, opponentId, Date.now()], function(err, resultSet) {
         if (err) {
             throw err;
         }
@@ -178,7 +178,7 @@ SQL.prototype.updateUserLadderPosition = function(userId, newLadderPosition, old
 SQL.prototype.insertMatch = function(challengerId, opponentId, callback) {
     var connection = this.getConnection();
     connection.connect();
-    connection.query('INSERT INTO `matches`(`challenger_id`, `opponent_id`) VALUES (?, ?)', [challengerId, opponentId], function(err, resultSet) {
+    connection.query('INSERT INTO matches (challenger_id, opponent_id, time) VALUES (?, ?, ?)', [challengerId, opponentId, Date.now()], function(err, resultSet) {
         if (err) {
             throw err;
         }
