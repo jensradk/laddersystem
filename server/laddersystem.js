@@ -281,14 +281,24 @@ LadderSystem.prototype.listenSendResult = function() {
  * Listen for send_challenge requests
  */
 LadderSystem.prototype.listenSendChallenge = function() {
-    var sql = this.sql;
+    var sql = this.sql,
+        throwError = this.throwError;
     this.app.post('/send_challenge', this.ensureAuthenticated, function(req, res) {
-        var challengerId = req.user.user_id,
-            opponentId = req.body.user_id;
+        var autoMap = {
+                challenger: function(callback) {
+                    sql.getUserByUserId(req.user.user_id, callback);
+                },
+                opponent: function(callback) {
+                    sql.getUserByUserId(req.body.user_id, callback);
+                },
+                insertChallenge: ['challenger', 'opponent', function(callback, results) {
+                    sql.insertChallenge(results.challenger.getUserId(), results.opponent.getUserId(), callback);
+                }]
+            };
 
-        console.log(challengerId, 'challenged', opponentId);
-
-        sql.insertChallenge(challengerId, opponentId, function() {
+        async.auto(autoMap, function(err, results) {
+            throwError(err);
+            console.log(results.challenger.getEmail() + ' challenged ' + results.opponent.getEmail());
             res.send({'success': true});
         });
     });
