@@ -20,7 +20,8 @@ var Passport = function(ladderSystem) {
 Passport.prototype.listen = function() {
     var GOOGLE_CLIENT_ID = "240168395136-l0liredkmjnih42sc6rj2jrtf40ed1l1.apps.googleusercontent.com",
         GOOGLE_CLIENT_SECRET = "hWVz3oZ9PNP4xH7VWGf6XD4r",
-        sql = this.ladderSystem.sql;
+        sql = this.ladderSystem.sql,
+        domain = this.ladderSystem.config.domain;
 
     this.passport.serializeUser(function(user, done) {
         done(null, user);
@@ -33,7 +34,7 @@ Passport.prototype.listen = function() {
     this.passport.use(new GoogleStrategy({
             clientID: GOOGLE_CLIENT_ID,
             clientSecret: GOOGLE_CLIENT_SECRET,
-            callbackURL: "http://ttladder.firecow.dk/auth/google/callback"
+            callbackURL: domain + "/auth/google/callback"
         },
         function(accessToken, refreshToken, profile, done) {
             // asynchronous verification, for effect...

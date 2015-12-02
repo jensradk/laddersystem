@@ -13,6 +13,7 @@
     "mysql": "^2.9.0",
     "nunjucks": "^2.2.0",
     "passport": "^0.3.2",
-    "passport-google-oauth": "^0.2.0"
+    "passport-google-oauth": "^0.2.0",
+    "repl": "^0.1.3"
   }
 }

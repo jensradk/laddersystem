@@ -1,0 +1,7 @@
+{
+	"domain": "http://ttladder.firecow.dk",
+	"sqlhost": "127.0.0.1",
+	"sqluser": "root",
+	"sqldatabase": "ttladder",
+	"port": 4404
+}
